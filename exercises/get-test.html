@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XHR-example</title>
+</head>
+<body>
+<h1>GET example</h1>
+<p id="holder"></p>
+</body>
+<script>
+  //API URL
+  const url =
+    "https://my-json-server.typicode.com/classicoman2/fakeRESTserver/characters/1";
+
+  // XHR Object creation
+  var xhr = new XMLHttpRequest();
+
+  // Callback with status change
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let JSONdata = this.responseText;
+
+      // Type string varaible --> "stringifyed JSON"
+      console.log(typeof JSONdata);
+
+      // JSON to Object conversion
+      let data = JSON.parse(JSONdata);
+      console.log(typeof data);
+
+      console.info(`My name is "${data.name}" and my motto is ${data.motto}`);
+
+      document.getElementById("holder").innerHTML = `My name is ${data.name} and my motto is ${data.motto}`;
+
+    }
+  };
+  xhr.open("GET", url, true);
+  xhr.send();
+</script>
+</html>

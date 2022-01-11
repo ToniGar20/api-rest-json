@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From 2 JSON</title>
+</head>
+<body>
+<h1>From 2 JSON</h1>
+<p id="holder1"></p>
+</body>
+<script>
+  /**
+   * Example of using data from different JSON
+   */
+  //API URL
+  const url1 = "../json-examples/data1.json";
+  // XHR Object creation
+  const xhr1 = new XMLHttpRequest();
+
+  // Callback with status change
+  xhr1.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let data1 = JSON.parse(this.responseText);
+      console.log(data1);
+
+      // API URL and XHR Object creation
+      const url2 = "../json-examples/data2.json";
+      const xhr2 = new XMLHttpRequest();
+
+      xhr2.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let data2 = JSON.parse(this.responseText);
+          console.log(data2);
+          document.getElementById("holder1").innerHTML = `My name is ${data1.name} and I am the ${data2.role} at the ${data1.band}`;
+        }
+      }
+      xhr2.open("GET", url2);
+      xhr2.send();
+    }
+  };
+  xhr1.open("GET", url1);
+  xhr1.send();
+</script>
+</html>
